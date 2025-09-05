@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="ContractionPPO: Certified Reinforcement Learning via Differentiable Contraction Layers">
+  <meta name="keywords" content="ContractionPPO, reinforcement learning, contraction theory, legged locomotion, quadruped robots, certified control, stability guarantees, PPO, robotics, AI, autonomous systems, control theory, machine learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Vrushabh Zinage, Narek Harutyunyan, Eric Verheyden, Fred Hadaegh, Soon-Jo Chung">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="distribution" content="global">
+  <meta name="rating" content="general">
+  <meta name="subject" content="Reinforcement Learning, Contraction Theory, Legged Locomotion, Certified Control">
+  <meta name="coverage" content="Worldwide">
+  <meta name="target" content="all">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#3498db">
+  <meta name="msapplication-TileColor" content="#3498db">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="ContractionPPO">
+  <meta name="application-name" content="ContractionPPO">
+  <meta name="msapplication-TileImage" content="static/images/favicon.ico">
+  <meta name="msapplication-config" content="none">
+  <link rel="canonical" href="https://contractionppo.github.io">
+  <link rel="alternate" hreflang="en" href="https://contractionppo.github.io">
+  <link rel="alternate" hreflang="x-default" href="https://contractionppo.github.io">
+  <meta property="og:title" content="ContractionPPO: Certified Reinforcement Learning via Differentiable Contraction Layers"/>
+  <meta property="og:description" content="ContractionPPO is a certified reinforcement learning approach that uses differentiable contraction layers for provably stable and robust policy optimization."/>
+  <meta property="og:url" content="https://contractionppo.github.io"/>
+  <title>ContractionPPO: Certified Reinforcement Learning via Differentiable Contraction Layers</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+
+  <meta property="og:image" content="https://contractionppo.github.io/assets/first_photo.png" />
+
+  <meta name="twitter:title" content="ContractionPPO: Certified Reinforcement Learning via Differentiable Contraction Layers">
+  <meta name="twitter:description" content="ContractionPPO is a certified reinforcement learning approach that uses differentiable contraction layers for provably stable and robust policy optimization.">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="https://contractionppo.github.io/assets/first_photo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <!-- <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE"> -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-168125787-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-168125787-1');
+  </script>
+  
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.36.1/gradio.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "ContractionPPO: Certified Reinforcement Learning via Differentiable Contraction Layers",
+    "description": "ContractionPPO is a certified reinforcement learning approach that uses differentiable contraction layers for provably stable and robust policy optimization.",
+    "keywords": "ContractionPPO, reinforcement learning, contraction theory, legged locomotion, quadruped robots, certified control, stability guarantees, PPO, robotics, AI, autonomous systems, control theory, machine learning",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Vrushabh Zinage",
+        "url": "https://vrushabh27.github.io/vrushabh_zinage/"
+      },
+      {
+        "@type": "Person",
+        "name": "Narek Harutyunyan",
+        "url": "https://linkedin.com/in/narek-harutyunyan-428069233"
+      },
+      {
+        "@type": "Person", 
+        "name": "Eric Verheyden",
+        "url": "https://linkedin.com/in/eric-verheyden"
+      },
+      {
+        "@type": "Person",
+        "name": "Fred Hadaegh",
+        "url": "https://cast.caltech.edu/people/fred-hadaegh"
+      },
+      {
+        "@type": "Person",
+        "name": "Soon-Jo Chung",
+        "url": "https://www.eas.caltech.edu/people/sjchung"
+      }
+    ],
+    "publisher": {
+      "@type": "Organization",
+      "name": "California Institute of Technology"
+    },
+    "datePublished": "2025",
+    "dateModified": "2025",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://contractionppo.github.io"
+    },
+    "url": "https://contractionppo.github.io",
+    "image": "https://contractionppo.github.io/assets/first_photo.png"
+  }
+  </script>
+  <style>
+    .line-height-adjust {
+            line-height: 1.1;
+        }
+
+        .button-shadow {
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    .blockMobile {
+      display: none; /* Hide the component by default */
+    }
+
+    .image-overlay {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateX(30%) translateY(-50%);
+  }
+
+    @media only screen and (min-width: 768px) {
+      .blockMobile {
+        display: block; /* Show the component for screen width 768px and above (desktop) */
+      }
+    }
+
+    .showMobile {
+      display: none; /* Hide the component by default */
+    }
+
+    .bar-image {
+      max-width: 100px;
+      height: auto;
+    }
+
+    @media only screen and (max-width: 768px) {
+      .showMobile {
+        display: block; /* Show the component for screen width 768px and above (desktop) */
+      }
+
+      .image-overlay {
+      position: relative; /* Move the image below the text */
+      top: 0;
+      transform: none; /* Remove vertical centering */
+      margin-top: 20px; /* Space between text and image */
+      margin-right: 0; /* Remove right alignment */
+    }
+
+    .bar-image {
+      display: none;
+    }
+    }
+
+    #dynamic-content {
+  position: relative; /* Ensure the content sections are positioned relative to this container */
+  min-height: 200px; /* Optional: Set a minimum height to prevent collapsing before content is displayed */
+    }
+
+    #dynamic-content .content-section {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #dynamic-content .content-section.active {
+      opacity: 1;
+      visibility: visible;
+      position: relative; /* Allow active content to influence the height of #dynamic-content */
+    }
+
+
+    /* Dropdown content styling */
+    .dropdown-content {
+      text-align: left !important;
+    }
+
+    .dropdown-item {
+      text-align: left !important;
+    }
+
+    /* Button alignment fix */
+    .publication-links .link-block {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .publication-links .link-block .button,
+    .publication-links .link-block .dropdown-trigger .button {
+      height: 2.5em !important;
+      min-height: 2.5em !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      vertical-align: middle !important;
+    }
+
+    .dropdown {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Fix dropdown button alignment */
+    .dropdown-trigger .button {
+      height: 2.5em !important; /* Match height of other buttons */
+      align-items: center;
+      display: inline-flex !important;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+                  <!-- <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="https://contractionppo.github.io/">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+      </div> -->
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title"><span style="color: #3b82f6;">ContractionPPO</span>: Certified Reinforcement Learning via Differentiable Contraction Layers</h1>
+                          <h3 class="is-size-5 has-text-weight-bold" style="color: orange;">
+                RAL
+            </h3>
+            <br>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <a href="https://vrushabh27.github.io/vrushabh_zinage/" target="_blank">Vrushabh Zinage</a>*<sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://linkedin.com/in/narek-harutyunyan-428069233" target="_blank">Narek Harutyunyan</a>*<sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://linkedin.com/in/eric-verheyden" target="_blank">Eric Verheyden</a>*<sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://cast.caltech.edu/people/fred-hadaegh" target="_blank">Fred Hadaegh</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://www.eas.caltech.edu/people/sjchung" target="_blank">Soon-Jo Chung</a><sup>1</sup>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><sup>1</sup>California Institute of Technology</span>
+              <br>
+              <span class="author-block"><sup>2</sup>Brown University</span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              * Equal Contributions
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </span>
+                </span>
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </span>
+                </span>
+
+                <!-- Video Link. -->
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="far fa-images"></i>
+                    </span>
+                    <span>Video</span>
+                  </span>
+                </span>
+                <!-- Related Works -->
+                <span class="link-block">
+                  <span class="button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-link"></i>
+                        </span>
+                        <span>Related Research</span>
+                        </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero abstract_fig">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <div class="video-placeholder" style="width: 100%; height: 400px; background-color: #f0f0f0; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+          <div style="text-align: center; color: #666;">
+            <i class="fas fa-video" style="font-size: 3em; margin-bottom: 1rem;"></i>
+            <p style="font-size: 1.2em; margin: 0;">Video Placeholder</p>
+            <p style="font-size: 0.9em; margin: 0.5rem 0 0 0;">ContractionPPO Demo Video</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #f8f9fa;">
+    <div class="container is-max-desktop">
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Legged locomotion in unstructured environments demands not only high-performance control policies but also formal guarantees to ensure robustness under perturbations. Control methods often require carefully designed reference trajectories, which are difficult to construct in high-dimensional, contact-rich systems like quadruped robots. In contrast, Reinforcement Learning (RL) directly learns policies that implicitly generate motion, and uniquely benefits from access to privileged information, such as full state and dynamics during training, that is not available at deployment. We present <strong>ContractionPPO</strong>, a framework for certified robust planning and control of legged robots by augmenting Proximal Policy Optimization (PPO) RL with a state-dependent contraction metric layer. This approach enables the policy to maximize performance while simultaneously producing a contraction metric that certifies incremental exponential stability of the simulated closed-loop system. The metric is parameterized as a Lipschitz neural network and trained jointly with the policy, either in parallel or as an auxiliary head of the PPO backbone. While the contraction metric is not deployed during real-world execution, we derive upper bounds on the worst-case contraction residual and show that these bounds ensure the learned contraction metric generalizes from simulation to real-world deployment. Our hardware experiments on quadruped locomotion demonstrate that contraction augmented PPO enables robust, certifiably stable control even under strong external perturbations.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--/ Abstract. -->
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">ContractionPPO Pipeline Overview</h2>
+          <div class="content has-text-justified">
+            <img src="assets/contractionppo_pipline.png" alt="ContractionPPO Pipeline Overview" style="width: 100%; height: auto;" />
+            <p>
+              Architecture of ContractionPPO. The PPO policy processes raw observations $\mathbf{o}$ and outputs desired joint poses $\mathbf{x}_d$, which are executed by a low-level PD controller. In parallel, the contraction metric MLP $M_\phi$ receives privileged and raw observations $\hat{\mathbf{x}}$ and outputs a positive definite metric $M_\phi = \Theta^\top \Theta$. The contraction loss is evaluated using the Lyapunov condition $\dot{V} + \alpha V \leq -\epsilon_\alpha$, where $\alpha$ specifies the desired contraction rate and $\epsilon_\alpha$ quantifies the approximation margin between the learned value function $V_\phi$ and the true contraction Lyapunov function $V$. A larger $\alpha$ leads to faster convergence guarantees but also requires a larger $\epsilon_\alpha$, making optimization more challenging. This joint training setup ensures that the policy not only maximizes task reward but also satisfies certifiable incremental stability guarantees during locomotion.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small is-light">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+                        <h2 class="title is-2 has-text-centered" style="margin-bottom: 2rem;">ContractionPPO Deployment</h2>
+            <h3 style="font-size: 1.3em; font-weight: 600; margin: 2em 0 1em 0; color: #34495e; text-align: center;">Comparisons with Baseline Methods</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; margin: 2rem 0;">
+              <!-- Video 1 -->
+              <div style="text-align: center;">
+                <video autoplay loop muted style="width: 100%; height: 200px; border-radius: 8px; object-fit: cover;">
+                  <source src="assets/contraction_0.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p style="font-size: 0.9em; margin: 0.5rem 0 0 0; color: #666;"><strong>ContractionPPO</strong></p>
+              </div>
+              
+              <!-- Video 2 -->
+              <div style="text-align: center;">
+                <video autoplay loop muted style="width: 100%; height: 200px; border-radius: 8px; object-fit: cover;">
+                  <source src="assets/nature.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p style="font-size: 0.9em; margin: 0.5rem 0 0 0; color: #666;">TumblerNet</p>
+              </div>
+              
+              <!-- Video 3 -->
+              <div style="text-align: center;">
+                <video autoplay loop muted style="width: 100%; height: 200px; border-radius: 8px; object-fit: cover;">
+                  <source src="assets/rma.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p style="font-size: 0.9em; margin: 0.5rem 0 0 0; color: #666;">Rapid Motor Adaptation</p>
+              </div>
+              
+              <!-- Video 4 -->
+              <div style="text-align: center;">
+                <video autoplay loop muted style="width: 100%; height: 200px; border-radius: 8px; object-fit: cover;">
+                  <source src="assets/ppo.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <p style="font-size: 0.9em; margin: 0.5rem 0 0 0; color: #666;">PPO</p>
+              </div>
+                </div>
+            
+            <!-- Caption for baseline comparison videos -->
+            <div style="text-align: center; margin-top: 1rem;">
+              <p style="font-size: 0.9em; color: #666; font-style: italic;">Comparisons with baseline methods</p>
+            </div>
+            
+            <h3 style="font-size: 1.3em; font-weight: 600; margin: 2em 0 1em 0; color: #34495e; text-align: center;">Wind Experiments</h3>
+            
+            <div class="video-carousel-container" style="position: relative; max-width: 800px; margin: 2rem auto; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+              <div class="video-carousel" id="windExperimentsCarousel" style="display: flex; transition: transform 0.5s ease-in-out;">
+                <!-- Video 1 -->
+                <div class="video-slide" style="min-width: 100%; position: relative;">
+                  <video autoplay loop style="width: 100%; height: 400px; object-fit: cover; display: block;" controls>
+                    <source src="assets/contraction_4.8.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="slide-caption" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 20px; text-align: center;">
+                    <p style="margin: 0; font-size: 1.1em; font-weight: 600;">Wind Speed 4.8<i>m/s</i></p>
+                  </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="video-slide" style="min-width: 100%; position: relative;">
+                  <video autoplay loop style="width: 100%; height: 400px; object-fit: cover; display: block;" controls>
+                    <source src="assets/contraction_6.4.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="slide-caption" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 20px; text-align: center;">
+                    <p style="margin: 0; font-size: 1.1em; font-weight: 600;">Wind Speed 6.4<i>m/s</i></p>
+                  </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="video-slide" style="min-width: 100%; position: relative;">
+                  <video autoplay loop style="width: 100%; height: 400px; object-fit: cover; display: block;" controls>
+                    <source src="assets/contraction_8.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="slide-caption" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 20px; text-align: center;">
+                    <p style="margin: 0; font-size: 1.1em; font-weight: 600;">Wind Speed 8.0<i>m/s</i></p>
+                  </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div class="video-slide" style="min-width: 100%; position: relative;">
+                  <video autoplay loop style="width: 100%; height: 400px; object-fit: cover; display: block;" controls>
+                    <source src="assets/contraction_9.6.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                  <div class="slide-caption" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 20px; text-align: center;">
+                    <p style="margin: 0; font-size: 1.1em; font-weight: 600;">Wind Speed 9.6<i>m/s</i></p>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Navigation Arrows -->
+              <button class="carousel-nav prev" onclick="changeSlide('windExperimentsCarousel', -1)" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+                <i class="fas fa-chevron-left" style="color: #333; font-size: 18px;"></i>
+              </button>
+              
+              <button class="carousel-nav next" onclick="changeSlide('windExperimentsCarousel', 1)" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transition: all 0.3s ease;">
+                <i class="fas fa-chevron-right" style="color: #333; font-size: 18px;"></i>
+              </button>
+              
+              <!-- Pagination Dots -->
+              <div class="carousel-dots" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px;">
+                <span class="dot active" onclick="currentSlide('windExperimentsCarousel', 1)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.8); cursor: pointer; transition: all 0.3s ease;"></span>
+                <span class="dot" onclick="currentSlide('windExperimentsCarousel', 2)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                <span class="dot" onclick="currentSlide('windExperimentsCarousel', 3)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                <span class="dot" onclick="currentSlide('windExperimentsCarousel', 4)" style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s ease;"></span>
+                </div>
+              </div>
+              
+              <!-- Caption for wind experiments -->
+              <div style="text-align: center; margin-top: 1rem;">
+                <p style="font-size: 0.9em; color: #666; font-style: italic;">Policies tested with generated wind conditions</p>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small is-light">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h3 style="font-size: 1.3em; font-weight: 600; margin: 2em 0 1em 0; color: #34495e; text-align: center;">Results from Simulation</h3>
+                <div class="content has-text-justified">
+              <div style="overflow-x: auto; margin: 2rem 0;">
+                $$\begin{array}{|l|c|c|c|c|c|c|}
+                \hline
+                \textbf{Method} & \textbf{10} & \textbf{20} & \textbf{30} & \textbf{40} & \textbf{50} & \textbf{Combined} \\
+                \hline
+                \textbf{ContractionPPO} & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} \\
+                \hline
+                \text{TumblerNet} & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\
+                \hline
+                \text{RMA} & 0.23 & 0.23 & 0.19 & 0.19 & 0.16 & 0.20 \\
+                \hline
+                \text{PPO} & 0.98 & 0.98 & 0.98 & 0.99 & 0.99 & 0.99 \\
+                \hline
+                \end{array}$$
+                <p style="font-size: 0.9em; margin: 1rem 0 0 0; color: #666; text-align: center;">
+                  <em>Comparison of methods across control points and violations. Numbers represent failure ratio over all episodes. Combined is 2500 episodes, and each control point is 500. Lower is better.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Video</h2>
+          <div class="video-placeholder" style="width: 100%; height: 400px; background-color: #f0f0f0; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+            <div style="text-align: center; color: #666;">
+              <i class="fas fa-video" style="font-size: 3em; margin-bottom: 1rem;"></i>
+              <p style="font-size: 1.2em; margin: 0;">Video Placeholder</p>
+              <p style="font-size: 0.9em; margin: 0.5rem 0 0 0;">ContractionPPO Demo Video</p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+
+  <!-- <section class="hero is-small is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Acknowledgments</h2>
+          <div class="content has-text-centered">
+            <p>
+              This work was supported by the National Institute of Advanced Industrial Science and Technology (AIST), 
+              DSTA contract No. DST000EC124000205, NSF GRFP under Grant No. DGE1745016, a hardware grant from Nvidia, 
+              and by Institute of Information & communications Technology Planning & Evaluation (IITP) grants by the Korean government (MSIT) (No.RS-2022-00143911, 
+              AI Excellence Global Innovative Leader Education Program; No.RS-2020-II201336, Artificial Intelligence graduate school support (UNIST); and No.RS-2024-00341055).
+            </p>
+          </div>
+        </div>
+      </div>
+  </section> -->
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+        @article{zinage2025contractionppo,
+          title={ContractionPPO: Certified Reinforcement Learning via Differentiable Contraction Layers},
+          author={Zinage, Vrushabh and Harutyunyan, Narek and Verheyden, Eric and Hadaegh, Fred and Chung, Soon-Jo},
+          journal={IEEE Robotics and Automation Letters (RAL)},
+          year={2025}
+        }
+      </code></pre>
+    </div>
+  </section>
+
+  <style>
+    #blocks {
+        width:100%;
+        height:60px;
+        margin:0 auto;
+    }
+    #block1 {
+        height:33.33%;
+        width:30%;
+        float: left;
+    }
+    #block2 {
+        height:33.33%;
+        width:40%;
+        float: left;
+    }
+    #block3 {
+        height:33.33%;
+        width:30%;
+        float: right;
+    }
+  </style>
+  
+
+
+
+<footer class="footer">
+  <div class="container">
+      <div id="blocks">
+        <div id="block1">
+          <a href="https://aerospacerobotics.caltech.edu/" target="_blank">
+            <img src="static/images/file.svg" alt="AirLab Logo" style="width:60%;">
+          </a>
+        </div>
+        <div id="block2">
+          <center>
+            <a class="button is-text" href="https://aerospacerobotics.caltech.edu/" target="_blank">
+              <i class="fas fa-globe fa-lg" style="height:100%;"></i>
+            </a>
+            <a class="button is-text" href="https://www.youtube.com/user/AeroboticsUIUC" target="_blank">
+              <i class="fab fa-youtube fa-lg"></i>
+            </a>
+            <br>
+            <br>
+            <p class="" style="font-size: .65rem;">This webpage was adapted from the 
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> 
+                template, which is licensed under a 
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+                  <img alt="Creative Commons License" style="border-width:0; height: 0.65rem;" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+                </a>
+            </p>
+            <p class="" style="font-size: .65rem;">If you use the <a href="https://github.com/ia-tigris/ia-tigris.github.io">source code</a> of this webpage,
+              please link back to this page in the footer.
+            </p>
+            <!-- <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              You are free to borrow the source code of this website, we just ask that you link back to this page in the footer.
+            </p> -->
+          </center>
+        </div>
+        <div id="block3">
+          <a href="https://www.caltech.edu/" target="_blank">
+            <img src="static/images/Caltech_Logo.svg" alt="Caltech Logo" style="float: right;">
+          </a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+<script>
+  function showContent(option,section) {
+      // Remove the active class from all sections
+      // const parentContainer = document.getElementById(`dynamic-content-${section}`);
+
+      const button = event.target;
+      const parentContainer = button.closest(".hero");
+
+      // Remove the active class from all content sections within this container
+      const sections = parentContainer.querySelectorAll(".content-section");
+      sections.forEach(contentSection => {
+        contentSection.classList.remove("active");
+      });
+
+      // Add the active class to the selected section
+      const selectedSection = document.getElementById(`content-${section}-${option}`);
+      if (selectedSection) {
+        selectedSection.classList.add("active");
+      }
+    }
+
+  // Video Carousel Functions
+  let currentSlideIndex = 0;
+  const totalSlides = 4;
+
+  function pauseAllVideos(carouselId) {
+    const carousel = document.getElementById(carouselId);
+    const videos = carousel.querySelectorAll('video');
+    videos.forEach(video => {
+      video.pause();
+    });
+  }
+
+  function playCurrentVideo(carouselId, slideIndex) {
+    const carousel = document.getElementById(carouselId);
+    const videos = carousel.querySelectorAll('video');
+    if (videos[slideIndex]) {
+      // Reset video to beginning and play
+      videos[slideIndex].currentTime = 0;
+      // Ensure volume is set to 10%
+      videos[slideIndex].volume = 0.1;
+      videos[slideIndex].play();
+    }
+  }
+
+  function changeSlide(carouselId, direction) {
+    const carousel = document.getElementById(carouselId);
+    const dots = carousel.parentElement.querySelectorAll('.dot');
+    
+    // Pause all videos first
+    pauseAllVideos(carouselId);
+    
+    currentSlideIndex += direction;
+    
+    // Handle wrapping
+    if (currentSlideIndex >= totalSlides) {
+      currentSlideIndex = 0;
+    } else if (currentSlideIndex < 0) {
+      currentSlideIndex = totalSlides - 1;
+    }
+    
+    // Update carousel position
+    carousel.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+    
+    // Update dots
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlideIndex);
+      dot.style.background = index === currentSlideIndex ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.5)';
+    });
+    
+    // Play the current video
+    playCurrentVideo(carouselId, currentSlideIndex);
+  }
+
+  function currentSlide(carouselId, slideNumber) {
+    const carousel = document.getElementById(carouselId);
+    const dots = carousel.parentElement.querySelectorAll('.dot');
+    
+    // Pause all videos first
+    pauseAllVideos(carouselId);
+    
+    currentSlideIndex = slideNumber - 1;
+    
+    // Update carousel position
+    carousel.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+    
+    // Update dots
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentSlideIndex);
+      dot.style.background = index === currentSlideIndex ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.5)';
+    });
+    
+    // Play the current video
+    playCurrentVideo(carouselId, currentSlideIndex);
+  }
+
+  // Auto-play functionality (optional)
+  function startAutoPlay(carouselId) {
+    setInterval(() => {
+      changeSlide(carouselId, 1);
+    }, 5000); // Change slide every 5 seconds
+  }
+
+  // Initialize carousel when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set all videos to 10% volume
+    const carousel = document.getElementById('windExperimentsCarousel');
+    const videos = carousel.querySelectorAll('video');
+    
+    videos.forEach((video, index) => {
+      // Set volume to 10%
+      video.volume = 0.1;
+      
+      video.addEventListener('ended', function() {
+        // Only auto-scroll if this is the currently active video
+        if (index === currentSlideIndex) {
+          console.log('Video ' + index + ' ended, moving to next slide');
+          // Move to next slide (wraps to first slide after last)
+          setTimeout(() => {
+            changeSlide('windExperimentsCarousel', 1);
+          }, 300);
+        }
+      });
+      
+      // Also ensure video is ready to play
+      video.addEventListener('loadedmetadata', function() {
+        video.volume = 0.1;
+      });
+    });
+    
+    // Play the first video when page loads
+    playCurrentVideo('windExperimentsCarousel', 0);
+    
+    // Add intersection observer to pause videos when not visible
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5 // Video needs to be at least 50% visible
+    };
+    
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          // Video is visible - resume if it's the current slide
+          const videoIndex = Array.from(videos).indexOf(video);
+          if (videoIndex === currentSlideIndex) {
+            video.play();
+          }
+        } else {
+          // Video is not visible - pause it
+          video.pause();
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all videos in the carousel
+    videos.forEach(video => {
+      videoObserver.observe(video);
+    });
+    
+    // Uncomment the line below if you want auto-play
+    // startAutoPlay('windExperimentsCarousel');
+  });
+</script>
+
+</body>
+
+</html>
