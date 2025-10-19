@@ -409,7 +409,7 @@
           <h2 class="title is-3">ContractionPPO Pipeline Overview</h2>
           <div class="content has-text-justified">
             <img src="assets/contractionppo_pipline.jpg" alt="ContractionPPO Pipeline Overview" style="width: 100%; height: auto;" />
-            <p>
+           <p style="font-size: 0.875rem;">
               Architecture of ContractionPPO. The PPO policy processes raw observations $\mathbf{o}$ and outputs desired joint poses $\mathbf{x}_d$, which are executed by a low-level PD controller. In parallel, the contraction metric MLP $M_\phi$ receives privileged and raw observations $\hat{\mathbf{x}}$ and outputs a positive definite metric $M_\phi = \Theta^\top \Theta$. The contraction loss is evaluated using the Lyapunov condition $\dot{V} + \alpha V \leq -\epsilon_\alpha$, where $\alpha$ specifies the desired contraction rate and $\epsilon_\alpha$ quantifies the approximation margin between the learned value function $V_\phi$ and the true contraction Lyapunov function $V$. A larger $\alpha$ leads to faster convergence guarantees but also requires a larger $\epsilon_\alpha$, making optimization more challenging. This joint training setup ensures that the policy not only maximizes task reward but also satisfies certifiable incremental stability guarantees during locomotion.
             </p>
           </div>
@@ -471,7 +471,7 @@
             <!-- Comparisons baselines image -->
             <div style="text-align: center; margin: 1rem 0;">
               <img src="assets/comparisions_baslines.jpg" alt="Comparisons with baseline methods" style="width: 100%; max-width: 800px; height: auto; border-radius: 8px;">
-              <p style="font-size: 0.9em; margin: 0.5rem 0 0 0; color: #666; text-align: center;">Comparison of trajectories for quadruped handstand using ContractionPPO (ours), TumblerNet, RMA and PPO where robots (for all baseline algorithms) were trained with identical reward functions that encourage remaining close to their initial position. While PPO, TumblerNet and RMA leaves the region and ultimately fails to remain on platform, ContractionPPO guarantees that the robot lie inside the circle (marked in black). This illustrates the core advantage of our approach i.e., provably stable and robust behavior.</p>
+              <p style="font-size: 0.875em; margin: 0.5rem 0 0 0; color: #666; text-align: center;">Comparison of trajectories for quadruped handstand using ContractionPPO (ours), TumblerNet, RMA and PPO where robots (for all baseline algorithms) were trained with identical reward functions that encourage remaining close to their initial position. While PPO, TumblerNet and RMA leaves the region and ultimately fails to remain on platform, ContractionPPO guarantees that the robot lie inside the circle (marked in black). This illustrates the core advantage of our approach i.e., provably stable and robust behavior.</p>
             </div>
             
             <h3 style="font-size: 1.3em; font-weight: 600; margin: 2em 0 1em 0; color: #34495e; text-align: center;">Wind Experiments</h3>
@@ -571,12 +571,12 @@
             <source src="assets/first_video.mp4" type="video/mp4">
             Your browser does not support the video tag.
           </video> -->
-          <iframe style="width: 100%; height: 450px; border-radius: 8px; object-fit: cover;" src="https://www.youtube-nocookie.com/embed/o2ctFPs7OD4?si=ywKpSTpv4qw3zV7j" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <!-- <iframe style="width: 100%; height: 450px; border-radius: 8px; object-fit: cover;" src="https://www.youtube-nocookie.com/embed/o2ctFPs7OD4?si=ywKpSTpv4qw3zV7j" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           <!-- <p style="font-size: 0.9em; margin: 0.5rem 0 0 0; color: #666; text-align: center;">We present ContractionPPO</p> -->
-        </div>
-      </div>
-  </div>
-</section> -->
+        <!-- </div> -->
+      <!-- </div> -->
+  <!-- </div> -->
+<!-- </section> --> --> -->
 
 
   <!-- <section class="hero is-small is-light">
