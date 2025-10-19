@@ -406,9 +406,9 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">ContractionPPO Pipeline Overview</h2>
+          <h2 class="title is-3">ContractionPPO Architecture</h2>
           <div class="content has-text-justified">
-            <img src="assets/contractionppo_pipline.jpg" alt="ContractionPPO Pipeline Overview" style="width: 100%; height: auto;" />
+            <img src="assets/contractionppo_pipeline.jpg" alt="ContractionPPO Architecture" style="width: 100%; height: auto;" />
            <p style="font-size: 0.875rem;">
               Architecture of ContractionPPO. The PPO policy processes raw observations $\mathbf{o}$ and outputs desired joint poses $\mathbf{x}_d$, which are executed by a low-level PD controller. In parallel, the contraction metric MLP $M_\phi$ receives privileged and raw observations $\hat{\mathbf{x}}$ and outputs a positive definite metric $M_\phi = \Theta^\top \Theta$. The contraction loss is evaluated using the Lyapunov condition $\dot{V} + \alpha V \leq -\epsilon_\alpha$, where $\alpha$ specifies the desired contraction rate and $\epsilon_\alpha$ quantifies the approximation margin between the learned value function $V_\phi$ and the true contraction Lyapunov function $V$. A larger $\alpha$ leads to faster convergence guarantees but also requires a larger $\epsilon_\alpha$, making optimization more challenging. This joint training setup ensures that the policy not only maximizes task reward but also satisfies certifiable incremental stability guarantees during locomotion.
             </p>
@@ -576,7 +576,7 @@
         <!-- </div> -->
       <!-- </div> -->
   <!-- </div> -->
-<!-- </section> --> --> -->
+<!-- </section> --> 
 
 
   <!-- <section class="hero is-small is-light">
