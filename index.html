@@ -430,7 +430,23 @@
   </p>
 
 </div>
-            
+<section class="section" style="background-color: #ffffff;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Why Contraction Matters</h2>
+        <div class="content has-text-justified">
+          <p>
+            Classical reinforcement learning can discover highly capable locomotion policies, but it typically does not provide formal guarantees on how the robot will behave under perturbations, modeling error, or observation noise. Contraction theory addresses this by certifying that nearby trajectories of the closed-loop system converge exponentially toward one another.
+          </p>
+          <p>
+            In ContractionPPO, this idea is embedded directly into training through a learned state-dependent contraction metric. The result is a controller that is not only performant in nominal conditions, but is also driven toward <strong>provably stable and robust behavior</strong> throughout learning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>            
                         <h2 class="title is-2 has-text-centered" style="margin-bottom: 2rem;">ContractionPPO Deployment</h2>
             <h3 style="font-size: 1.3em; font-weight: 600; margin: 2em 0 1em 0; color: #34495e; text-align: center;">Comparisons with Baseline Methods</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 20px; margin: 2rem 0;">
